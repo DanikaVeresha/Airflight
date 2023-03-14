@@ -13,8 +13,8 @@ class ExceptionFlight(models.Model):
 # Create your models here.
 class AirFlight(models.Model):
     Flight_id = models.UUIDField()
-    Pilot = models.ForeignKey(Pilot.Pilot_name, on_delete=models.CASCADE)
-    Exception = models.ForeignKey(ExceptionFlight.Exception_name, on_delete=models.CASCADE)
+    Pilot = models.ForeignKey(Pilot, on_delete=models.CASCADE)
+    Exception = models.ForeignKey(ExceptionFlight, on_delete=models.CASCADE)
     Status_flight = models.CharField(default='straight', max_length=20)
     Flight_status_by_passengers = models.CharField(default='empty', max_length=20)
     Flight_type = models.CharField(default='passenger', max_length=20)
@@ -42,8 +42,9 @@ class ExceptionPoint(models.Model):
 
 class Flight(models.Model):
     Flight_id = models.UUIDField()
-    StartingPoint = models.ForeignKey(StartingPoint.StartingPoint_name, on_delete=models.CASCADE)
-    PointOfArrival = models.ForeignKey(PointOfArrival.PointOfArrival_name, on_delete=models.CASCADE)
-    ExceptionPoint = models.ForeignKey(ExceptionPoint.ExceptionPoint_name, on_delete=models.CASCADE)
+    StartingPoint = models.ForeignKey(StartingPoint, on_delete=models.CASCADE)
+    PointOfArrival = models.ForeignKey(PointOfArrival, on_delete=models.CASCADE)
+    ExceptionPoint = models.ForeignKey(ExceptionPoint, on_delete=models.CASCADE)
+
 
 
