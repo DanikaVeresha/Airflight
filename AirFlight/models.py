@@ -1,50 +1,51 @@
 from django.db import models
 
 
-class Pilot(models.Model):
-    Pilot_name = models.CharField(max_length=100)
+class AirCompany(models.Model):
+    AirFlight_id = models.UUIDField()
+    AirCommpany = models.CharField(max_length=100)
 
 
-class ExceptionFlight(models.Model):
-    Exception_name = models.CharField(max_length=100)
-    Exception_description = models.CharField(max_length=100)
+class DeparturePoint(models.Model):
+    AirFlight_id = models.UUIDField()
+    DeparturePoint_name = models.CharField(max_length=100)
+    DeparturePoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
+    DeparturePoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
 
 
-# Create your models here.
-class AirFlight(models.Model):
-    Flight_id = models.UUIDField()
-    Pilot = models.ForeignKey(Pilot, on_delete=models.CASCADE)
-    Exception = models.ForeignKey(ExceptionFlight, on_delete=models.CASCADE)
-    Status_flight = models.CharField(default='straight', max_length=20)
-    Flight_status_by_passengers = models.CharField(default='empty', max_length=20)
-    Flight_type = models.CharField(default='passenger', max_length=20)
-    Flight_price = models.DecimalField(decimal_places=2, max_digits=10, null=True)
-    Flight_date = models.DateField(null=True)
+class ArrivalPoint(models.Model):
+    AirFlight_id = models.UUIDField()
+    ArrivalPoint_name = models.CharField(max_length=100)
+    ArrivalPoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
+    ArrivalPoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
 
 
-class StartingPoint(models.Model):
-    StartingPoint_name = models.CharField(max_length=100)
-    Airport_latitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
-    Airport_longitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+class ForcedPoint(models.Model):
+    AirFlight_id = models.UUIDField()
+    ForcedPoint_name = models.CharField(max_length=100)
+    ForcedPoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
+    ForcedPoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
 
 
-class PointOfArrival(models.Model):
-    PointOfArrival_name = models.CharField(max_length=100)
-    Airport_latitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
-    Airport_longitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+class AirLines(models.Model):
+    AirFlight_id = models.UUIDField()
+    AirCommpany = models.CharField(max_length=100)
+    DeparturePoint = models.CharField(max_length=100)
+    ArrivalPoint = models.CharField(max_length=100)
+    ForcedPoint = models.CharField(max_length=100, null=True)
+    AirFlight_departure_date = models.DateField(null=True)
+    AirFight_price = models.DecimalField(decimal_places=2, max_digits=10)
+    AirFlight_status = models.CharField(default='Straight', max_length=100)
+    AirFlight_type = models.CharField(default='Passenger', max_length=100)
+    Weather = models.CharField(default='Favorable', max_length=100)
+    Description_weather = models.CharField(default='Sunny', max_length=100)
+    Distance = models.DecimalField(decimal_places=20, max_digits=50)
 
 
-class ExceptionPoint(models.Model):
-    ExceptionPoint_name = models.CharField(max_length=100)
-    Airport_latitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
-    Airport_longitude_coordinate = models.DecimalField(decimal_places=2, max_digits=10, null=True)
+class UserList(models.Model):
+    user_id = models.IntegerField
+    AirFlight_id = models.UUIDField()
 
-
-class Flight(models.Model):
-    Flight_id = models.UUIDField()
-    StartingPoint = models.ForeignKey(StartingPoint, on_delete=models.CASCADE)
-    PointOfArrival = models.ForeignKey(PointOfArrival, on_delete=models.CASCADE)
-    ExceptionPoint = models.ForeignKey(ExceptionPoint, on_delete=models.CASCADE)
 
 
 
