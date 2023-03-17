@@ -36,3 +36,4 @@ def register_pilot(request):
 def logout_pilot(request):
     logout(request)
     return redirect('/user/login')
+

@@ -81,6 +81,10 @@ def changed_AirLines_weather(request):
 
 
 def add_ForcedPoint(request):
+    if not request.user.is_authenticated:
+        return redirect('/user/login')
+    user_id = request.user.id
+    pilot_list = UserList.objects.filter(id=user_id).first()
     if request.method == 'POST':
         forcedpoint = request.POST.get('adress_airoport')
         geolocator = Nominatim(user_agent="AirFlight")
@@ -91,5 +95,6 @@ def add_ForcedPoint(request):
                                          ForcedPoint_latitude=latitude,
                                          ForcedPoint_longitude=longitude)
         forcedpoint_object.save()
-        return render(request, 'add_ForcedPoint.html')
+    result = ForcedPoint.objects.filter(ForcedPoint_id=pilot_list.ForcedPoint_id)
+    return render(request, 'add_ForcedPoint.html', {'forcedpoint_data': result})
 

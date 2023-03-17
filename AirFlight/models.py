@@ -9,22 +9,22 @@ class AirCompany(models.Model):
 class DeparturePoint(models.Model):
     AirFlight_id = models.UUIDField()
     DeparturePoint_name = models.CharField(max_length=100)
-    DeparturePoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
-    DeparturePoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
+    DeparturePoint_latitude = models.DecimalField(decimal_places=100, max_digits=100)
+    DeparturePoint_longitude = models.DecimalField(decimal_places=100, max_digits=100)
 
 
 class ArrivalPoint(models.Model):
     AirFlight_id = models.UUIDField()
     ArrivalPoint_name = models.CharField(max_length=100)
-    ArrivalPoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
-    ArrivalPoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
+    ArrivalPoint_latitude = models.DecimalField(decimal_places=100, max_digits=100)
+    ArrivalPoint_longitude = models.DecimalField(decimal_places=100, max_digits=100)
 
 
 class ForcedPoint(models.Model):
     AirFlight_id = models.UUIDField()
     ForcedPoint_name = models.CharField(max_length=100)
-    ForcedPoint_latitude = models.DecimalField(decimal_places=20, max_digits=50)
-    ForcedPoint_longitude = models.DecimalField(decimal_places=20, max_digits=50)
+    ForcedPoint_latitude = models.DecimalField(decimal_places=100, max_digits=100)
+    ForcedPoint_longitude = models.DecimalField(decimal_places=100, max_digits=100)
 
 
 class AirLines(models.Model):
@@ -39,7 +39,7 @@ class AirLines(models.Model):
     AirFlight_type = models.CharField(default='Passenger', max_length=100)
     Weather = models.CharField(default='Favorable', max_length=100)
     Description_weather = models.CharField(default='Sunny', max_length=100)
-    Distance = models.DecimalField(decimal_places=20, max_digits=50)
+    Distance = models.DecimalField(decimal_places=100, max_digits=100)
 
 
 class UserList(models.Model):

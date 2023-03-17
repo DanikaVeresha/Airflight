@@ -6,7 +6,7 @@
 </head>
 <body>
 <h4> Greate Flight! </h4>
-<form action="/add_AirLines/" method="post">
+<form action="add_AirLines" method="post">
     {% csrf_token %}
     <div class="container">
         <label for="username"><b>AirCommpany</b></label>
@@ -28,7 +28,7 @@
     <button type="submit">Greate Flight!</button>
     </div>
     {% for item in airlines_data %}
-        <p>{{item.id }} - Commpany:{{item.aircommpany }} - Airoport:{{ item.adress_airoport }} - Airoport:{{ item.adress_airoporte }} - {{ item.airfight_price }}USD</p>
+        <p>{{item.id }} - Commpany:{{item.aircommpany }} - Airoport:{{ item.adress_airoport }} - Airoport:{{ item.adress_airoporte }} - {{ item.airfight_price }}USD - {{ item.Distance }}ML</p>
     {% endfor %}
 </form>
 </body>
