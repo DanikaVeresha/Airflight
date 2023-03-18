@@ -4,20 +4,20 @@ from geopy.geocoders import Nominatim
 from haversine import haversine, Unit
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from AirFlight.models import AirLines, AirCompany, DeparturePoint, ArrivalPoint, UserList, ForcedPoint
+from airflight.models import AirLines, AirCompany, DeparturePoint, ArrivalPoint, UserList, ForcedPoint
 
 
 def add_AirLines(request):
     if not request.user.is_authenticated:
         return redirect('/user/login')
     user_id = request.user.id
-    pilot_list = UserList.objects.filter(id=user_id).first()
+    pilot_list = UserList.objects.filter(id=12).first()
     if request.method == 'POST':
         aircommpany = request.POST.get('aircommpany')
         aircommpany_object = AirCompany(AirCommpany=aircommpany)
         aircommpany_object.save()
         departurepoint = request.POST.get('adress_airoport')
-        geolocator = Nominatim(user_agent="AirFlight")
+        geolocator = Nominatim(user_agent="airflight")
         location = geolocator.geocode(departurepoint)
         dlatitude = location.latitude
         dlongitude = location.longitude
@@ -26,7 +26,7 @@ def add_AirLines(request):
                                                DeparturePoint_longitude=dlongitude)
         departurepoint_object.save()
         arrivalpoint = request.POST.get('adress_airoporte')
-        geolocator = Nominatim(user_agent="AirFlight")
+        geolocator = Nominatim(user_agent="airflight")
         location = geolocator.geocode(departurepoint)
         alatitude = location.latitude
         alongitude = location.longitude
@@ -65,7 +65,7 @@ def changed_AirLines_weather(request):
         trtPoint = ForcedPoint.objects.get(ForcedPoint_latitude=ForcedPoint.ForcedPoint_latitude,
                                            ForcedPoint_longitude=ForcedPoint.ForcedPoint_longitude)
         distance_obj = haversine((startPoint.DeparturePoint_latitude, startPoint.DeparturePoint_longitude),
-                                    (trtPoint.ForcedPoint_latitude, trtPoint.ForcedPoint_longitude), unit=Unit.MILES)
+                                 (trtPoint.ForcedPoint_latitude, trtPoint.ForcedPoint_longitude), unit=Unit.MILES)
         finishPoint = ArrivalPoint.objects.get(ArrivalPoint_latitude=ArrivalPoint.ArrivalPoint_latitude,
                                                ArrivalPoint_longitude=ArrivalPoint.ArrivalPoint_longitude)
         distance_object = haversine((trtPoint.ForcedPoint_latitude, trtPoint.ForcedPoint_longitude),
@@ -77,7 +77,7 @@ def changed_AirLines_weather(request):
                                    Description_weather=Description_weather_object,
                                    Distance=total_distance)
         AirLines_object.save()
-    return redirect('/airlines/')
+    return redirect('/airflifht')
 
 
 def add_ForcedPoint(request):
@@ -87,7 +87,7 @@ def add_ForcedPoint(request):
     pilot_list = UserList.objects.filter(id=user_id).first()
     if request.method == 'POST':
         forcedpoint = request.POST.get('adress_airoport')
-        geolocator = Nominatim(user_agent="AirFlight")
+        geolocator = Nominatim(user_agent="airflight")
         location = geolocator.geocode(forcedpoint)
         latitude = location.latitude
         longitude = location.longitude
@@ -96,5 +96,6 @@ def add_ForcedPoint(request):
                                          ForcedPoint_longitude=longitude)
         forcedpoint_object.save()
     result = ForcedPoint.objects.filter(ForcedPoint_id=pilot_list.ForcedPoint_id)
-    return render(request, 'add_ForcedPoint.html', {'forcedpoint_data': result})
+    return render(request, 'add_forcedpoint.html', {'forcedpoint_data': result})
+
 

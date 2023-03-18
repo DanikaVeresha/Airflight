@@ -6,7 +6,7 @@
 </head>
 <body>
 <h4> Greate Flight! </h4>
-<form action="add_AirLines" method="post">
+<form action="airlines" method="post">
     {% csrf_token %}
     <div class="container">
         <label for="username"><b>AirCommpany</b></label>
@@ -25,7 +25,7 @@
         <input type="text" name="airfight_price" placeholder="Price" required>
         <br>
         <br>
-    <button type="submit">Greate Flight!</button>
+        <button type="submit">Greate Flight!</button>
     </div>
     {% for item in airlines_data %}
         <p>{{item.id }} - Commpany:{{item.aircommpany }} - Airoport:{{ item.adress_airoport }} - Airoport:{{ item.adress_airoporte }} - {{ item.airfight_price }}USD - {{ item.Distance }}ML</p>

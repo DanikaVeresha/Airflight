@@ -6,14 +6,14 @@
 </head>
 <body>
 <h4> Add_ForcedPoint! </h4>
-<form action="add_ForcedPoint" method="post">
+<form action="forcedpoint" method="post">
     {% csrf_token %}
     <div class="container">
         <label for="username"><b>ForcedPoint</b></label>
         <input type="text" name="adress_airoport" placeholder="Adress_Airoport" required>
         <br>
         <br>
-    <button type="submit">Add ForcedPoint!</button>
+        <button type="submit">Add ForcedPoint!</button>
     </div>
     {% for item in forcedpoint_data %}
         <p>{{item.id }} - ForcedPoint:{{ item.adress_airoport }}</p>
