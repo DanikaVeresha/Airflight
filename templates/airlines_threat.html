@@ -7,7 +7,7 @@
 You are logged into the aircraft control system as pilot: {{ user.username }}. Access is allowed !
 <body>
 <h4> Greate Flight! </h4>
-<form action="normal_mode" method="post">
+<form action="potential_threat_mode" method="post">
     {% csrf_token %}
     <div class="container">
         <label for="username"><b>AirCommpany</b></label>
@@ -24,8 +24,8 @@ You are logged into the aircraft control system as pilot: {{ user.username }}. A
         <br>
         <button type="submit">Greate Flight!</button>
     </div>
-    {% for item in airlines_data %}
-        <p>{{item.id }} - Commpany: {{item.AirCommpany }} - Airport: {{ item.DeparturePoint }} -> Airport: {{ item.ArrivalPoint }} - {{ item.Distance }} ML - Status: {{item.AirFlight_status }} - Type: {{ item.AirFlight_type }} - Weather: {{ item.Weather }} - Description: {{ item.Description_weather }}</p>
+    {% for item in airlines_threat_data %}
+        <p>{{item.id }} - Commpany: {{item.AirCommpany }} - Airport: {{ item.DeparturePoint }} -> Airpot: {{item.ForcedPoint }} -> Airport: {{ item.ArrivalPoint }} - {{ item.Distance }} ML - Status: {{item.AirFlight_status }} - Type: {{ item.AirFlight_type }} - Weather: {{ item.Weather }} - Description: {{ item.Description_weather }}</p>
     {% endfor %}
 </form>
 </body>

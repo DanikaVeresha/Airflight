@@ -12,7 +12,7 @@ def login_pilot(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/airflight/airlines')
+            return redirect('/airflight/add_forcedPoint')
         else:
             return redirect('/user/register')
     else:

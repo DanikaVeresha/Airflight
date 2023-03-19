@@ -7,3 +7,4 @@ urlpatterns = [
     path('/logout', views.logout_pilot, name='logout_pilot'),
 ]
 
+

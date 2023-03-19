@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Add_ForcedPoint!</title>
 </head>
+You are logged into the aircraft control system as pilot: {{ user.username }}. Access is allowed !
 <body>
 <h4> Add_ForcedPoint! </h4>
-<form action="forcedpoint" method="post">
+<form action="add_forcedPoint" method="post">
     {% csrf_token %}
     <div class="container">
         <label for="username"><b>ForcedPoint</b></label>
