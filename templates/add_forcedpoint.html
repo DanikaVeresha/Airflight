@@ -16,7 +16,7 @@
         <button type="submit">Add ForcedPoint!</button>
     </div>
     {% for item in forcedpoint_data %}
-        <p>{{item.id }} - ForcedPoint:{{ item.adress_airoport }}</p>
+        <p>{{item.id }} - ForcedPoint: {{ item.ForcedPoint_name }} - latitude: {{item.ForcedPoint_latitude}} - longitude: {{item.ForcedPoint_longitude}}</p>
     {% endfor %}
 </form>
 </body>

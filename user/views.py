@@ -12,7 +12,7 @@ def login_pilot(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/airflight')
+            return redirect('/airflight/airlines')
         else:
             return redirect('/user/register')
     else:
@@ -27,8 +27,6 @@ def register_pilot(request):
         user.save()
         pilot_list = UserList(id=user.id, AirFlight_id=uuid.uuid4())
         pilot_list.save()
-        pilot = AirCompany(id=user.id, AirFlight_id=uuid.uuid4())
-        pilot.save()
         return redirect('/user/login')
     return render(request, 'register.html')
 
