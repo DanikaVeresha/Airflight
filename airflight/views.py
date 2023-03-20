@@ -78,17 +78,20 @@ def potential_threat_mode(request):
                                            ArrivalPoint_longitude=alongitude,
                                            AirFlight_id=pilot_list.AirFlight_id)
         arrivalpoint_object.save()
+        distance = haversine((departurepoint_object.DeparturePoint_latitude, departurepoint_object.DeparturePoint_longitude),
+                             (arrivalpoint_object.ArrivalPoint_latitude, arrivalpoint_object.ArrivalPoint_longitude), unit=Unit.MILES)
         trtPoint = ForcedPoint.objects.filter(AirFlight_id=pilot_list.AirFlight_id).all()
         for item in trtPoint:
             trt_distance = haversine((departurepoint_object.DeparturePoint_latitude, departurepoint_object.DeparturePoint_longitude),
                                      (item.ForcedPoint_latitude, item.ForcedPoint_longitude), unit=Unit.MILES)
-            if trt_distance < 500:
+            if trt_distance < distance:
+                trt_item = ForcedPoint.objects.filter(ForcedPoint_name=item.ForcedPoint_name).first()
                 airlines_object = AirLines(AirCommpany=aircommpany_object.AirCommpany,
                                            DeparturePoint=departurepoint_object.DeparturePoint_name,
                                            ArrivalPoint=arrivalpoint_object.ArrivalPoint_name,
                                            AirFlight_id=pilot_list.AirFlight_id,
                                            AirFlight_departure_date=datetime.datetime.now(),
-                                           ForcedPoint=item.ForcedPoint_name,
+                                           ForcedPoint=trt_item.ForcedPoint_name,
                                            AirFlight_status='Changed',
                                            Weather='Not favorable',
                                            Description_weather='Thunderstorm or no-fly zone')
