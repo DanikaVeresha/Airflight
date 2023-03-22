@@ -22,7 +22,7 @@ class ArrivalPoint(models.Model):
 
 class ForcedPoint(models.Model):
     AirFlight_id = models.UUIDField()
-    ForcedPoint_name = models.CharField(max_length=100)
+    ForcedPoint_name = models.CharField(max_length=200)
     ForcedPoint_latitude = models.DecimalField(decimal_places=2, max_digits=10)
     ForcedPoint_longitude = models.DecimalField(decimal_places=2, max_digits=10)
 

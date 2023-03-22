@@ -2,31 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AirLines!</title>
+    <title>Normal mode!</title>
 </head>
 You are logged into the aircraft control system as pilot: {{ user.username }}. Access is allowed !
 <body>
 <h4> Greate Flight! </h4>
-<form action="normal_mode" method="post">
+<form action="/airflight/" method="post">
     {% csrf_token %}
-    <div class="container">
-        <label for="username"><b>AirCommpany</b></label>
-        <input type="text" name="aircommpany" placeholder="AirCommpany" required>
-        <br>
-        <br>
-        <label for="username"><b>DeparturePoint</b></label>
-        <input type="text" name="adress_airoport" placeholder="Adress_Airoport" required>
-        <br>
-        <br>
-        <label for="username"><b>ArrivalPoint</b></label>
-        <input type="text" name="adress_airoporte" placeholder="Adress_Airoport" required>
-        <br>
-        <br>
-        <button type="submit">Greate Flight!</button>
-    </div>
+    <input type="text" name="aircommpany" placeholder="AirCommpany">
+    <input type="text" name="adress_airoport" placeholder="Adress_Airoport">
+    <input type="text" name="adress_airoporte" placeholder="Adress_Airoport">
+    <input type="submit" value="Greate Flight">
     {% for item in airlines_data %}
-        <p>{{item.id }} - Commpany: {{item.AirCommpany }} - Airport: {{ item.DeparturePoint }} -> Airport: {{ item.ArrivalPoint }} - {{ item.Distance }} ML - Status: {{item.AirFlight_status }} - Type: {{ item.AirFlight_type }} - Weather: {{ item.Weather }} - Description: {{ item.Description_weather }}</p>
+        <p>{{item.id }} - Pilot: {{ user.username }} - Commpany: {{item.AirCommpany }} - DeparturePoint: {{ item.DeparturePoint }} -> ForcedPoint: {{ item.ForcedPoint }} -> ArrivalPoint: {{ item.ArrivalPoint }} - Distance: {{ item.Distance }} ML
+            Status: {{item.AirFlight_status }} - Type: {{ item.AirFlight_type }} - Weather: {{ item.Weather }} - Description: {{ item.Description_weather }}</p>
     {% endfor %}
 </form>
+<br>
+<!--<h3>Change flight!</h3>-->
+<!--<form action="/airflight/ {{item.AirFlight_id.id }} /changer_flight" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <select name="AirFlight_id">-->
+<!--        {% for item in airlines_data %}-->
+<!--            <option value="{{ AirFlight_id.id }}">{{ item.id }}</option>-->
+<!--        {% endfor %}-->
+<!--    </select>-->
+<!--    <input type="submit" value="Change Flight">-->
+<!--</form>-->
 </body>
 </html>
