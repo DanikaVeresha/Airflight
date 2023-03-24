@@ -19,15 +19,15 @@ You are logged into the aircraft control system as pilot: {{ user.username }}. A
     {% endfor %}
 </form>
 <br>
-<!--<h3>Change flight!</h3>-->
-<!--<form action="/airflight/ {{item.AirFlight_id.id }} /changer_flight" method="post">-->
-<!--    {% csrf_token %}-->
-<!--    <select name="AirFlight_id">-->
-<!--        {% for item in airlines_data %}-->
-<!--            <option value="{{ AirFlight_id.id }}">{{ item.id }}</option>-->
-<!--        {% endfor %}-->
-<!--    </select>-->
-<!--    <input type="submit" value="Change Flight">-->
-<!--</form>-->
+<h3>Switch off!</h3>
+<form action="/airflight/switch_off" method="post">
+    {% csrf_token %}
+    <select name="airflight_id">
+        {% for item in airlines_data %}
+            <option value="{{ item.id }}">{{ item.id }} - Pilot: {{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Switch off">
+</form>
 </body>
 </html>

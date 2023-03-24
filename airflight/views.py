@@ -35,7 +35,7 @@ def flight_launch(request):
                                            ArrivalPoint_longitude=arrival_longitude,
                                            AirFlight_id=pilot_list.AirFlight_id)
         arrivalpoint_object.save()
-        forcedpoint = ((departure_latitude + 0.05, departure_longitude - 0.05))
+        forcedpoint = ((departure_latitude + 1, departure_longitude - 1))
         location = geolocator.reverse(forcedpoint)
         forcedpoint_object = ForcedPoint(ForcedPoint_name=location.address,
                                          ForcedPoint_latitude=forcedpoint[0],
@@ -51,19 +51,58 @@ def flight_launch(request):
                                    AirFlight_status='Changed',
                                    Weather='Not favorable',
                                    Description_weather='Thunderstorm or no-fly zone')
-        distancedf = haversine((departurepoint_object.DeparturePoint_latitude,
-                                departurepoint_object.DeparturePoint_longitude),
-                               (forcedpoint_object.ForcedPoint_latitude,
-                                forcedpoint_object.ForcedPoint_longitude), unit=Unit.METERS)
-        distansefa = haversine((forcedpoint_object.ForcedPoint_latitude,
-                                forcedpoint_object.ForcedPoint_longitude),
-                               (arrivalpoint_object.ArrivalPoint_latitude,
-                                arrivalpoint_object.ArrivalPoint_longitude), unit=Unit.METERS)
-        distance = sum([distancedf, distansefa])
+        departure = airlines_object.DeparturePoint
+        arrival = airlines_object.ArrivalPoint
+        forced = airlines_object.ForcedPoint
+        geolocator = Nominatim(user_agent="airflight")
+        location = geolocator.geocode(departure)
+        departure_latitude = location.latitude
+        departure_longitude = location.longitude
+        location = geolocator.geocode(arrival)
+        arrival_latitude = location.latitude
+        arrival_longitude = location.longitude
+        location = geolocator.geocode(forced)
+        forced_latitude = location.latitude
+        forced_longitude = location.longitude
+        distancedf = haversine((departure_latitude, departure_longitude),
+                               (forced_latitude, forced_longitude), unit=Unit.MILES)
+        distancefa = haversine((forced_latitude, forced_longitude),
+                               (arrival_latitude, arrival_longitude), unit=Unit.MILES)
+        distance = sum([distancedf, distancefa])
         airlines_object.Distance = distance
         airlines_object.save()
     result = AirLines.objects.filter(AirFlight_id=pilot_list.AirFlight_id)
     return render(request, 'airlines.html', {'airlines_data': result})
+
+
+def switch_off(request):
+    if not request.user.is_authenticated:
+        return redirect('/user/login')
+    user_id = request.user.id
+    pilot_list = UserList.objects.filter(id=user_id).first()
+    result = AirLines.objects.filter(AirFlight_id=pilot_list.AirFlight_id)
+    for item in result:
+        item.ForcedPoint = 'Absent'
+        item.AirFlight_status = 'Straight'
+        item.Weather = 'Favorable'
+        item.Description_weather = 'Sunny'
+        departure = item.DeparturePoint
+        geolocator = Nominatim(user_agent="airflight")
+        location = geolocator.geocode(departure)
+        departure_latitude = location.latitude
+        departure_longitude = location.longitude
+        arrival = item.ArrivalPoint
+        geolocator = Nominatim(user_agent="airflight")
+        location = geolocator.geocode(arrival)
+        arrival_latitude = location.latitude
+        arrival_longitude = location.longitude
+        distanceda = haversine((departure_latitude, departure_longitude),
+                               (arrival_latitude, arrival_longitude), unit=Unit.MILES)
+        item.Distance = distanceda
+        item.save()
+    return redirect('/airflight/')
+
+
 
 
 

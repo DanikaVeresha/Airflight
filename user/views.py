@@ -36,3 +36,4 @@ def logout_pilot(request):
     return redirect('/user/login')
 
 
+

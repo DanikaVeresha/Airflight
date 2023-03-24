@@ -22,3 +22,4 @@ urlpatterns = [
     path('airflight/', include('airflight.urls_airflight')),
 ]
 
+
